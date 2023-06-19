@@ -2,26 +2,48 @@
 
 require "../vendor/autoload.php";
 
+use Router\RouterHandler;
+use App\Controllers\RegionController;
+use App\Controllers\ComunaController;
+use App\Controllers\CandidatoController;
+use App\Controllers\VotarController;
+
 $page = $_GET["page"] ?? null;
 $page = explode("/", $page);
 
 $resource = $page[0] == "" ? "/" : $page[0];
+$id = $page[1] ?? null;
+
+$router = new RouterHandler();
 
 switch ($resource){
     case "/":
-        echo "Estas en el home";
+        $method = $_POST["method"] ?? "get";
+        $router->set_method($method);
+        $router->set_data($_POST);
+        $router->route(VotarController::class, $id);
         break;
 
     case "region":
-        echo "Estas en la page de Region";
+
+        $method = $_POST["method"] ?? "get";
+        $router->set_method($method);
+        $router->set_data($_POST);
+        $router->route(RegionController::class, $id);
         break;
 
     case "comuna":
-        echo "Estas en la page de comunas";
+        $method = $_POST["method"] ?? "get";
+        $router->set_method($method);
+        $router->set_data($_POST);
+        $router->route(ComunaController::class, $id);
         break;
 
     case "candidato":
-        echo "Estas en la pagina de candidatos";
+        $method = $_POST["method"] ?? "get";
+        $router->set_method($method);
+        $router->set_data($_POST);
+        $router->route(CandidatoController::class, $id);
         break;
 
     default:
