@@ -1,0 +1,13 @@
+{
+    "name": "carlos/desis",
+    "description": "Proyecto de prueba tecnica para desis 2023",
+    "type": "project",
+    "license": "MTL",
+    "authors": [
+        {
+            "name": "Carlos",
+            "email": "carlos.9942@gmail.com"
+        }
+    ],
+    "require": {}
+}
