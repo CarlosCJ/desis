@@ -12,17 +12,21 @@ class RegionController {
     }
 
     public function index() {
-
+        $stmt = $this->connection->prepare("SELECT * FROM regiones");
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+        require "../resources/views/region/index.php";
     }
 
     public function create() {
-
+        require("../resources/views/region/create.php");
     }
 
     public function store($data) {
+        var_dump($data);
         try {
             $stmt = $this->connection->prepare("INSERT INTO regiones (nombre) VALUES (:nombre)");
-            $stmt->bindParam(':nombre', $data);
+            $stmt->bindParam(':nombre', $data['nombre']);
             $stmt->execute();
         } catch (\PDOException $e) {
             echo "Error al ejecutar la consulta: " . $e->getMessage();
