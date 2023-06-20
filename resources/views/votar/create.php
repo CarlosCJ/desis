@@ -45,7 +45,7 @@
             <div>
                 <label for="comunas">Comuna</label>
                 <select name="comuna" id="comunas" disabled>
-                    <option value="1" selected>Seleccione su comuna</option>
+                    <option value="0" selected>Seleccione su comuna</option>
                 </select>
             </div>
 
@@ -88,6 +88,29 @@
                 } else {
                     inputElement.prop("disabled", true);
                 }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#regions").change(function() {
+                var selectedRegion = $(this).val();
+                $.ajax({
+                    url: "/comuna/index",
+                    method: "POST",
+                    data: { region: selectedRegion },
+                    dataType: "json",
+                    success: function(response) {
+                        $("#comunas").empty();
+                        $.each(response, function(index, commune) {
+                            $("#comunas").append('<option value="' + commune.id + '">' + commune.nombre + '</option>');
+                        });
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Error al obtener las comunas: " + error);
+                    }
+                });
             });
         });
     </script>
