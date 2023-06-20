@@ -85,6 +85,7 @@
     </main>
 
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="/js/validaciones.js"></script>
     <script>
         $(document).ready(function() {
             $("#regions").change(function() {
