@@ -12,7 +12,13 @@ class VotarController{
     }
 
     public function index() {
-
+        $votoRun = $_POST['run'];
+        $stmt = $this->connection->prepare("SELECT run FROM votaciones WHERE run = :run");
+        $stmt->bindParam(':run', $votoRun);
+        $stmt->execute();
+        $results = $stmt->fetch();
+        header('Content-Type: application/json');
+        echo json_encode($results);
     }
 
     public function create() {

@@ -88,15 +88,37 @@
     <script src="/js/validaciones.js"></script>
     <script>
         $(document).ready(function() {
+            $("#dni").on ("blur", function (){
+                var valorRun = $(this).val().trim();
+                validateDuplicateRUN(valorRun);
+            });
+
             $("#regions").change(function() {
                 var regionId = $(this).val();
                 var inputElement = $("#comunas");
-
                 inputElement.prop("disabled", regionId == 0 ? true : false);
-
                 getComunasByRegion(regionId);
             });
         });
+
+        function validateDuplicateRUN(run){
+            $.ajax({
+                url: "/votar/index",
+                method: "POST",
+                data: { run: valorRun },
+                dataType: "json",
+                success: function(response) {
+                    if (response){
+                        $('#dni').val('');
+                        alert('El RUN ya voto por un candidato.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error al obtener las comunas: " + error);
+                }
+            });
+        }
+
         function getComunasByRegion(regionId) {
             $.ajax({
                 url: "/comuna/index",
