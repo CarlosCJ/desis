@@ -16,7 +16,15 @@ class VotarController{
     }
 
     public function create() {
+        $stmt = $this->connection->prepare("SELECT * FROM regiones");
+        $stmt->execute();
+        $resultsRegions = $stmt->fetchAll();
 
+        $stmt = $this->connection->prepare("SELECT * FROM candidatos");
+        $stmt->execute();
+        $resultsCandidatos = $stmt->fetchAll();
+
+        require("../resources/views/votar/create.php");
     }
 
     public function store($data) {
