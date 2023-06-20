@@ -1,0 +1,5 @@
+span[id$="-error"] {
+    display: none;
+    padding-left: 1rem;
+    color: #ff0000;
+}
