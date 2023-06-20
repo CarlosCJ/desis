@@ -17,7 +17,7 @@ $id = $page[1] ?? null;
 $router = new RouterHandler();
 
 switch ($resource){
-    case "/":
+    case "votar":
         $method = $_POST["method"] ?? "get";
         $router->set_method($method);
         $router->set_data($_POST);
@@ -25,7 +25,6 @@ switch ($resource){
         break;
 
     case "region":
-
         $method = $_POST["method"] ?? "get";
         $router->set_method($method);
         $router->set_data($_POST);

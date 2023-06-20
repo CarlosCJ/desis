@@ -23,7 +23,6 @@ class RegionController {
     }
 
     public function store($data) {
-        var_dump($data);
         try {
             $stmt = $this->connection->prepare("INSERT INTO regiones (nombre) VALUES (:nombre)");
             $stmt->bindParam(':nombre', $data['nombre']);
