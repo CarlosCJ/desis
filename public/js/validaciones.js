@@ -77,13 +77,11 @@ function validar_select_candidato(){
 function valdiar_check_item(){
     $("input[type='checkbox']").on("change", function() {
         var checkedCount = $("input[type='checkbox']:checked").length;
-
+        $("#checked").val(checkedCount);
         if (checkedCount >= 2) {
             $("#checkbox-error").hide();
-            // $("input[type='checkbox']").removeClass("error");
         } else {
             $("#checkbox-error").show();
-            // $("input[type='checkbox']").addClass("error");
         }
     });
 }
