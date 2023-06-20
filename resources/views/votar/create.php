@@ -76,6 +76,20 @@
         </form>
     </main>
 
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#regions").change(function() {
+                var selectValue = $(this).val();
+                var inputElement = $("#comunas");
 
+                if (selectValue != 0) {
+                    inputElement.prop("disabled", false);
+                } else {
+                    inputElement.prop("disabled", true);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
