@@ -11,7 +11,7 @@
 
     <h1>FORMULARIO DE VOTACIÓN:</h1>
     <main>
-        <form action="/region" method="post">
+        <form action="/votar" method="post">
 
             <div>
                 <label for="full_name">Nombre y Apellido</label>
@@ -27,7 +27,7 @@
 
             <div>
                 <label for="dni">RUN</label>
-                <input type="text" name="run" id="dni" pattern="/^[0-9]{8,9}-[0-9kK]$/" placeholder="12345678-9" required>
+                <input type="text" name="run" id="dni"  placeholder="12345678-9" required min="9" max="10">
                 <span id="dni-error">No tiene el formato correcto (sin puntos) o no es valido</span>
             </div>
 
@@ -68,13 +68,14 @@
 
             <div>
                 <label>¿Cómo se enteró de Nosotros?</label>
-                <label for="cbox_web"><input type="checkbox" id="cbox_web" value="web" checked> Web</label>
-                <label for="cbox_tv"><input type="checkbox" id="cbox_tv" value="tv" checked> Tv</label>
-                <label for="cbox_rrss"><input type="checkbox" id="cbox_rrss" value="rrss"> Redes Sociales</label>
-                <label for="cbox_amigo"><input type="checkbox" id="cbox_amigo" value="amigo"> Amigo</label>
+                <label for="cbox_web"><input type="checkbox" id="cbox_web" name="web" checked> Web</label>
+                <label for="cbox_tv"><input type="checkbox" id="cbox_tv"  name="tv" checked> Tv</label>
+                <label for="cbox_rrss"><input type="checkbox" id="cbox_rrss" name="rrss"> Redes Sociales</label>
+                <label for="cbox_amigo"><input type="checkbox" id="cbox_amigo" name="amigo"> Amigo</label>
                 <span id="checkbox-error">Debe seleccionar al menos 2 items</span>
             </div>
 
+            <input type="hidden" id="checked" value="2">
             <input type="hidden" name="method" value="post">
 
             <div>
@@ -99,13 +100,25 @@
                 inputElement.prop("disabled", regionId == 0 ? true : false);
                 getComunasByRegion(regionId);
             });
+
+            $("button").click(function(event) {
+                if ($("#checked").val() < 2 ){
+                    event.preventDefault();
+                } else {
+                    $("#cbox_web").val($("#cbox_web").is(":checked") ? "1" : "0");
+                    $("#cbox_tv").val($("#cbox_tv").is(":checked") ? "1" : "0");
+                    $("#cbox_rrss").val($("#cbox_rrss").is(":checked") ? "1" : "0");
+                    $("#cbox_amigo").val($("#cbox_amigo").is(":checked") ? "1" : "0");
+                    $("form").submit();
+                }
+            });
         });
 
         function validateDuplicateRUN(run){
             $.ajax({
                 url: "/votar/index",
                 method: "POST",
-                data: { run: valorRun },
+                data: { run: run },
                 dataType: "json",
                 success: function(response) {
                     if (response){
