@@ -11,7 +11,19 @@ class ComunaController {
     }
 
     public function index() {
-
+        $regionId = $_POST['region'];
+        $stmt = $this->connection->prepare("SELECT idcomunas, nombre FROM comunas WHERE regiones_idRegion = :regionId ORDER BY nombre ASC");
+        $stmt->bindParam(':regionId', $regionId);
+        $stmt->execute();
+        $results = $stmt->fetchAll();
+        $mappedResults = array_map(function ($row) {
+            return [
+                'id' => $row['idcomunas'],
+                'nombre' => $row['nombre']
+            ];
+        }, $results);
+        header('Content-Type: application/json');
+        echo json_encode($mappedResults);
     }
 
     public function create() {
