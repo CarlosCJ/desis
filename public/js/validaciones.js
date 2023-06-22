@@ -23,7 +23,7 @@ function validar_full_name(){
 
 // VALIDAR ALIAS
 function validar_alias(){
-    $("#nickname").on("input", function() {
+    $("#nickname").on("blur", function() {
         var alias = $(this).val();
         if (alias.length < 5 || !/[a-zA-Z]/.test(alias) || !/[0-9]/.test(alias)) {
             $("#nickname-error").show();

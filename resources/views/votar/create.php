@@ -102,15 +102,16 @@
             });
 
             $("button").click(function(event) {
-                if ($("#checked").val() < 2 ){
+                if ($("#checked").val() < 2){
                     event.preventDefault();
                 } else {
-                    $("#cbox_web").val($("#cbox_web").is(":checked") ? "1" : "0");
-                    $("#cbox_tv").val($("#cbox_tv").is(":checked") ? "1" : "0");
-                    $("#cbox_rrss").val($("#cbox_rrss").is(":checked") ? "1" : "0");
-                    $("#cbox_amigo").val($("#cbox_amigo").is(":checked") ? "1" : "0");
-                    $("form").submit();
+                    var error = validarClick();
+                    if(error == 0){
+                        $("form").submit();
+                    }
                 }
+                event.preventDefault();
+                alert('Algunos campos no se han completado y/o se han ingresado datos incorrectos.');
             });
         });
 
@@ -149,6 +150,35 @@
                     console.log("Error al obtener las comunas: " + error);
                 }
             });
+        }
+
+        function validarClick(error = 0){
+            $("#cbox_web").val($("#cbox_web").is(":checked") ? "1" : "0");
+            $("#cbox_tv").val($("#cbox_tv").is(":checked") ? "1" : "0");
+            $("#cbox_rrss").val($("#cbox_rrss").is(":checked") ? "1" : "0");
+            $("#cbox_amigo").val($("#cbox_amigo").is(":checked") ? "1" : "0");
+            if($("#full_name").val().trim() == ""){
+                error = true;
+            }
+            var nickname = $("#nickname").val();
+            if (nickname.length < 5 || !/[a-zA-Z]/.test(nickname) || !/[0-9]/.test(nickname)) {
+                error++;
+            }
+            var run = $("#dni").val().replace(/\.+|-/g, '');
+            if(!/^0*(\d{1,3}(\.?\d{3})*)\-?([\dkK])$/.test(run)){
+                error++;
+            }
+            var correo = $("#correo").val();
+            if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)){
+                error++;
+            }
+            if($("#regions").val() === "0"){
+                error++;
+            }
+            if($("#candidatos").val() === "0"){
+                error++;
+            }
+            return error;
         }
     </script>
 </body>
